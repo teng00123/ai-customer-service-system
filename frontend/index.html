@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI智能客服系统</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-robot me-2"></i>AI智能客服系统
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#chat"><i class="fas fa-comments me-1"></i>智能对话</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#knowledge"><i class="fas fa-book me-1"></i>知识库</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#recommendations"><i class="fas fa-star me-1"></i>推荐中心</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#analytics"><i class="fas fa-chart-bar me-1"></i>数据分析</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#settings"><i class="fas fa-cog me-1"></i>系统设置</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <!-- 侧边栏 -->
+            <div class="col-md-3 col-lg-2 sidebar">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h6 class="mb-0"><i class="fas fa-user me-2"></i>用户信息</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <img src="https://ui-avatars.com/api/?name=用户&background=007bff&color=fff" 
+                             alt="用户头像" class="rounded-circle mb-2" width="60" height="60">
+                        <h6 class="mb-1">访客用户</h6>
+                        <small class="text-muted">ID: guest_001</small>
+                    </div>
+                </div>
+
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>系统状态</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>AI引擎:</span>
+                            <span class="badge bg-success">在线</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>知识库:</span>
+                            <span class="badge bg-success">在线</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>推荐系统:</span>
+                            <span class="badge bg-success">在线</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>响应时间:</span>
+                            <span class="text-success">156ms</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="mb-0"><i class="fas fa-history me-2"></i>快捷操作</h6>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-outline-primary btn-sm w-100 mb-2" onclick="clearChat()">
+                            <i class="fas fa-trash me-1"></i>清空对话
+                        </button>
+                        <button class="btn btn-outline-info btn-sm w-100 mb-2" onclick="exportChat()">
+                            <i class="fas fa-download me-1"></i>导出记录
+                        </button>
+                        <button class="btn btn-outline-warning btn-sm w-100" onclick="showHelp()">
+                            <i class="fas fa-question-circle me-1"></i>帮助中心
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 主内容区 -->
+            <div class="col-md-9 col-lg-10">
+                <!-- 标签页导航 -->
+                <ul class="nav nav-tabs mb-3" id="mainTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="chat-tab" data-bs-toggle="tab" data-bs-target="#chat" type="button">
+                            <i class="fas fa-comments me-1"></i>智能对话
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="knowledge-tab" data-bs-toggle="tab" data-bs-target="#knowledge" type="button">
+                            <i class="fas fa-book me-1"></i>知识库
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="recommendations-tab" data-bs-toggle="tab" data-bs-target="#recommendations" type="button">
+                            <i class="fas fa-star me-1"></i>推荐中心
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="analytics-tab" data-bs-toggle="tab" data-bs-target="#analytics" type="button">
+                            <i class="fas fa-chart-bar me-1"></i>数据分析
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- 标签页内容 -->
+                <div class="tab-content" id="mainTabContent">
+                    <!-- 智能对话标签页 -->
+                    <div class="tab-pane fade show active" id="chat" role="tabpanel">
+                        <div class="chat-container">
+                            <div class="chat-messages" id="chatMessages">
+                                <div class="message system-message">
+                                    <div class="message-content">
+                                        <i class="fas fa-robot me-2"></i>
+                                        您好！我是AI智能客服助手，很高兴为您服务。我可以帮您解答问题、推荐产品、处理订单等。请问有什么可以帮助您的吗？
+                                    </div>
+                                    <div class="message-time">刚刚</div>
+                                </div>
+                            </div>
+                            <div class="chat-input">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="messageInput" 
+                                           placeholder="请输入您的问题..." onkeypress="handleKeyPress(event)">
+                                    <button class="btn btn-primary" type="button" onclick="sendMessage()">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                                <div class="mt-2">
+                                    <small class="text-muted">快捷提问：</small>
+                                    <div class="quick-questions">
+                                        <button class="btn btn-sm btn-outline-secondary me-1 mb-1" 
+                                                onclick="sendQuickMessage('如何查询订单状态？')">订单查询</button>
+                                        <button class="btn btn-sm btn-outline-secondary me-1 mb-1" 
+                                                onclick="sendQuickMessage('产品有什么特色？')">产品特色</button>
+                                        <button class="btn btn-sm btn-outline-secondary me-1 mb-1" 
+                                                onclick="sendQuickMessage('如何申请退款？')">退款申请</button>
+                                        <button class="btn btn-sm btn-outline-secondary me-1 mb-1" 
+                                                onclick="sendQuickMessage('推荐一些热门产品')">热门推荐</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 知识库标签页 -->
+                    <div class="tab-pane fade" id="knowledge" role="tabpanel">
+                        <div class="knowledge-container">
+                            <div class="row mb-3">
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="knowledgeSearch" 
+                                           placeholder="搜索知识库文章...">
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-select" id="categoryFilter">
+                                        <option value="">全部分类</option>
+                                        <option value="产品说明">产品说明</option>
+                                        <option value="使用指南">使用指南</option>
+                                        <option value="常见问题">常见问题</option>
+                                        <option value="技术支持">技术支持</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row" id="knowledgeResults">
+                                <div class="col-md-6 mb-3">
+                                    <div class="card knowledge-card">
+                                        <div class="card-body">
+                                            <h6 class="card-title">产品使用入门指南</h6>
+                                            <p class="card-text text-muted small">详细介绍产品的初始设置和基本使用方法...</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="badge bg-primary">产品说明</span>
+                                                <small class="text-muted">2024-01-15</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="card knowledge-card">
+                                        <div class="card-body">
+                                            <h6 class="card-title">常见问题解答</h6>
+                                            <p class="card-text text-muted small">收集用户最常遇到的问题和解决方案...</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="badge bg-info">常见问题</span>
+                                                <small class="text-muted">2024-01-10</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 推荐中心标签页 -->
+                    <div class="tab-pane fade" id="recommendations" role="tabpanel">
+                        <div class="recommendations-container">
+                            <div class="row mb-4">
+                                <div class="col-md-12">
+                                    <h5><i class="fas fa-star me-2 text-warning"></i>个性化推荐</h5>
+                                    <p class="text-muted">基于您的使用习惯和偏好，为您推荐以下内容</p>
+                                </div>
+                            </div>
+                            <div class="row" id="recommendationsList">
+                                <div class="col-md-4 mb-3">
+                                    <div class="card recommendation-card">
+                                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
+                                            <i class="fas fa-laptop fa-3x text-primary"></i>
+                                        </div>
+                                        <div class="card-body">
+                                            <h6 class="card-title">高性能笔记本电脑</h6>
+                                            <p class="card-text small">适合办公和娱乐的全能笔记本</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-warning">★★★★☆</span>
+                                                <span class="badge bg-success">推荐</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card recommendation-card">
+                                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
+                                            <i class="fas fa-headphones fa-3x text-info"></i>
+                                        </div>
+                                        <div class="card-body">
+                                            <h6 class="card-title">无线蓝牙耳机</h6>
+                                            <p class="card-text small">降噪效果好，音质清晰</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-warning">★★★★★</span>
+                                                <span class="badge bg-success">热门</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card recommendation-card">
+                                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
+                                            <i class="fas fa-mobile-alt fa-3x text-success"></i>
+                                        </div>
+                                        <div class="card-body">
+                                            <h6 class="card-title">智能手机支架</h6>
+                                            <p class="card-text small">多角度调节，稳固耐用</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-warning">★★★☆☆</span>
+                                                <span class="badge bg-primary">新品</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 数据分析标签页 -->
+                    <div class="tab-pane fade" id="analytics" role="tabpanel">
+                        <div class="analytics-container">
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <div class="card text-center metric-card">
+                                        <div class="card-body">
+                                            <i class="fas fa-comments fa-2x text-primary mb-2"></i>
+                                            <h4 class="metric-value">1,234</h4>
+                                            <p class="metric-label">总会话数</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card text-center metric-card">
+                                        <div class="card-body">
+                                            <i class="fas fa-clock fa-2x text-success mb-2"></i>
+                                            <h4 class="metric-value">2.3m</h4>
+                                            <p class="metric-label">平均响应时间</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card text-center metric-card">
+                                        <div class="card-body">
+                                            <i class="fas fa-thumbs-up fa-2x text-info mb-2"></i>
+                                            <h4 class="metric-value">89%</h4>
+                                            <p class="metric-label">用户满意度</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card text-center metric-card">
+                                        <div class="card-body">
+                                            <i class="fas fa-brain fa-2x text-warning mb-2"></i>
+                                            <h4 class="metric-value">94%</h4>
+                                            <p class="metric-label">意图识别准确率</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h6 class="mb-0">意图分布</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <canvas id="intentChart" height="200"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h6 class="mb-0">满意度趋势</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <canvas id="satisfactionChart" height="200"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 反馈模态框 -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">反馈意见</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">满意度评分</label>
+                        <div class="star-rating" id="starRating">
+                            <i class="far fa-star" data-rating="1"></i>
+                            <i class="far fa-star" data-rating="2"></i>
+                            <i class="far fa-star" data-rating="3"></i>
+                            <i class="far fa-star" data-rating="4"></i>
+                            <i class="far fa-star" data-rating="5"></i>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">意见反馈</label>
+                        <textarea class="form-control" id="feedbackText" rows="3" 
+                                  placeholder="请分享您的使用体验..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="submitFeedback()">提交反馈</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
